@@ -1,0 +1,25 @@
+{
+  "name": "spa-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpaProject2024/Back-end.git"
+  },
+  "keywords": [
+    "Spa-Backend"
+  ],
+  "author": "Group06",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SpaProject2024/Back-end/issues"
+  },
+  "homepage": "https://github.com/SpaProject2024/Back-end#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
