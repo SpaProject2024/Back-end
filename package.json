@@ -1,11 +1,11 @@
 {
   "name": "spa-backend",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "src/server.js",
    "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect server.js"
+    "start": "nodemon --inspect src/server.js"
   },
   "repository": {
     "type": "git",

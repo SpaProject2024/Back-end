@@ -1,8 +1,11 @@
 import express from "express";
-import connectDB from "./config/db.js";
-import testRoutes from "./routes/testRouters.js";
+import connectDB from "../config/db.js";
+import testRoutes from "../routes/testRouters.js";
 import dotenv from "dotenv";
 import cors from "cors";
+
+const morgan = require("morgan");
+app.use(morgan("combined"));
 
 dotenv.config();
 connectDB();
