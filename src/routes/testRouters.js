@@ -5,7 +5,7 @@ import {
   getTestById,
   updateTest,
   deleteTest,
-} from "../controllers/testController.js";
+} from "../app/controllers/testController.js";
 
 const router = express.Router();
 router.get("/", getTests);

@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import testRoutes from "./routes/testRouters.js";
+import doctorsRoutes from "./routes/doctorsRouter.js";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/tests", testRoutes);
+app.use("/doctors", doctorsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);

@@ -21,12 +21,15 @@ export const createTest = async (req, res) => {
 export const getTests = async (req, res) => {
   try {
     const tests = await TestApi.find(); 
+    console.log("data:", tests);
+    return res.status(200).json({ message: "Success", data: tests });
   } catch (error) {
     return res
       .status(500)
       .json({ message: "Error retrieving tests", error: error.message });
   }
 };
+
 
 
 export const getTestById = async (req, res) => {
