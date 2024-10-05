@@ -10,6 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
 const PORT = process.env.PORT || 8000;
 
 // Cấu hình session
@@ -20,10 +21,10 @@ app.use(session({
   cookie: { secure: false } // Thiết lập secure: true nếu bạn sử dụng HTTPS
 }));
 app.use(morgan("combined"));
-app.use(express.json());
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 route(app);
 
