@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session"; // Thêm import cho express-session
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -12,6 +13,13 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
+// Cấu hình session
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key', // Chuỗi bí mật cho phiên làm việc
+  resave: false, // Không lưu lại phiên nếu không có sự thay đổi
+  saveUninitialized: true, // Lưu lại phiên mới
+  cookie: { secure: false } // Thiết lập secure: true nếu bạn sử dụng HTTPS
+}));
 app.use(morgan("combined"));
 
 app.use(cors());
