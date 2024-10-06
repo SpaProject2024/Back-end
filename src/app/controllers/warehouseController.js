@@ -49,6 +49,12 @@ exports.getAllWarehouses = async (req, res) => {
 };
 
 
+
+
+
+
+
+
 exports.getWarehouseById = async (req, res) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
