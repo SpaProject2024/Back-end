@@ -4,7 +4,9 @@ import loginRoutes from "./loginRouter.js";
 import registerRoutes from "./registerRouter.js";
 import verifyPinRoutes from "./verifyPinRouter.js";
 import fogetPasswordRoutes from "./fogetPasswordRouter.js";
+import warehouseRouters from "./warehouseRouter.js";
 import services from "./service.js";
+
 function route(app) {
   app.use("/tests", testRoutes);
   app.use("/doctors", doctorsRoutes);
@@ -13,5 +15,6 @@ function route(app) {
   app.use("/verifyPin", verifyPinRoutes);
   app.use("/fogetPassword", fogetPasswordRoutes);
   app.use("/services", services);
+  app.use("/warehouse", warehouseRouters);
 }
 export default route;
