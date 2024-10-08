@@ -1,5 +1,3 @@
-
-
 import User from "../models/users.js"; // Mô hình User từ MongoDB
 import bcrypt from "bcrypt"; // Thư viện mã hóa mật khẩu
 import jwt from "jsonwebtoken"; // Thư viện tạo token JWT
