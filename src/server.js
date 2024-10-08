@@ -1,9 +1,9 @@
-// server.js
 import express from "express";
 import connectDB from "./config/db.js";
 import testRoutes from "./routes/testRouters.js";
 import doctorsRoutes from "./routes/doctorsRouter.js";
 import userRoutes from "./routes/userRouter.js"; // Đảm bảo đã import userRoutes
+import workScheduleRoutes from "./routes/workScheduleRoutes.js"; // Import work schedule routes
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/tests", testRoutes);
 app.use("/doctors", doctorsRoutes);
 app.use("/users", userRoutes); // Thêm dòng này để sử dụng userRoutes
+app.use("/works", workScheduleRoutes); // Thêm dòng này để sử dụng work schedule routes
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
