@@ -1,7 +1,6 @@
-const Warehouse = require('../models/warehouse');
+import Warehouse from '../models/warehouse.js';
 
-
-exports.addWarehouse = async (req, res) => {
+const addWarehouse = async (req, res) => {
   try {
     const { name, location, capacity } = req.body;
     const newWarehouse = new Warehouse({ name, location, capacity });
@@ -12,8 +11,7 @@ exports.addWarehouse = async (req, res) => {
   }
 };
 
-
-exports.updateWarehouse = async (req, res) => {
+const updateWarehouse = async (req, res) => {
   try {
     const warehouse = await Warehouse.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!warehouse) {
@@ -25,8 +23,7 @@ exports.updateWarehouse = async (req, res) => {
   }
 };
 
-
-exports.deleteWarehouse = async (req, res) => {
+const deleteWarehouse = async (req, res) => {
   try {
     const warehouse = await Warehouse.findByIdAndDelete(req.params.id);
     if (!warehouse) {
@@ -38,8 +35,7 @@ exports.deleteWarehouse = async (req, res) => {
   }
 };
 
-
-exports.getAllWarehouses = async (req, res) => {
+const getAllWarehouses = async (req, res) => {
   try {
     const warehouses = await Warehouse.find();
     res.status(200).json(warehouses);
@@ -48,8 +44,7 @@ exports.getAllWarehouses = async (req, res) => {
   }
 };
 
-
-exports.getWarehouseById = async (req, res) => {
+const getWarehouseById = async (req, res) => {
   try {
     const warehouse = await Warehouse.findById(req.params.id);
     if (!warehouse) {
@@ -59,4 +54,13 @@ exports.getWarehouseById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error getting warehouse', error });
   }
+};
+
+
+export default {
+  addWarehouse,
+  updateWarehouse,
+  deleteWarehouse,
+  getAllWarehouses,
+  getWarehouseById,
 };

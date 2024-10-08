@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const warehouseController = require('../controllers/warehouseController');
+import warehouseController from '../app/controllers/warehouseController.js';
 
 router.post('/add', warehouseController.addWarehouse);
 router.put('/update/:id', warehouseController.updateWarehouse);
@@ -8,4 +8,4 @@ router.delete('/delete/:id', warehouseController.deleteWarehouse);
 router.get('/list', warehouseController.getAllWarehouses);
 router.get('/detail/:id', warehouseController.getWarehouseById);
 
-module.exports = router;
+export default router; 
