@@ -1,4 +1,4 @@
-import Service from "./../models/Service.js";
+import Service from "../models/Service.js";
 
 class ServiceController {
   // List of Services
@@ -26,10 +26,8 @@ class ServiceController {
 
   // Update Service
   update(req, res, next) {
-    Service.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
-      .then((updatedService) => res.status(200).json({ data: updatedService }))
+    Service.updateOne({ _id: req.params.id }, req.body)
+      .then(() => res.status(200).json({ _id: req.params.id, data: req.body }))
       .catch((error) => res.status(500).json({ message: error.message }));
   }
 
