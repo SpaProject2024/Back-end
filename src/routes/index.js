@@ -1,6 +1,6 @@
 import testRoutes from "./testRouters.js";
 import doctorsRoutes from "./doctorsRouter.js";
-import services from "./service.js";
+import services from "./ServiceRouter.js";
 
 function route(app) {
   app.use("/tests", testRoutes);
