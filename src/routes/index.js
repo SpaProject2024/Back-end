@@ -4,8 +4,7 @@ import loginRoutes from "./loginRouter.js";
 import registerRoutes from "./registerRouter.js";
 import verifyPinRoutes from "./verifyPinRouter.js";
 import fogetPasswordRoutes from "./fogetPasswordRouter.js";
-import warehouseRouters from "./warehouseRouter.js";
-import services from "./service.js";
+import services from "./ServiceRouter.js";
 
 function route(app) {
   app.use("/tests", testRoutes);

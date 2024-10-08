@@ -1,5 +1,5 @@
 import express from "express";
-import serviceController from "./../app/controllers/ServiceController.js";
+import serviceController from "../app/controllers/ServiceController.js";
 import serviceMiddleware from "../app/middleware/ServiceMiddleware.js"; 
 const router = express.Router()
 
