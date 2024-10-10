@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   createDoctor,
   getDoctors,
@@ -15,3 +16,4 @@ router.put("/:id", authorizeRole(["doctor", "admin", "manager"]), updateDoctor);
 router.delete("/:id",authorizeRole(["admin", "manager"]), deleteDoctor);
 
 export default router;
+

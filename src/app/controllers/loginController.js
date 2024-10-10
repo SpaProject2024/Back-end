@@ -117,4 +117,3 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng", error: error.message });
   }
 };
-
