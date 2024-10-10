@@ -1,7 +1,7 @@
 import managers from "../models/managers.js"; // Import the doctors model
 
 // Create a new doctor
-export const createDoctor = async (req, res) => {
+export const createManager = async (req, res) => {
     const { fullName, managerID, email, password, numberPhone, gender, address, birthday, avatar, roleID, workingtime } = req.body;
 
     // Check for required fields
@@ -81,7 +81,7 @@ export const updateManager = async (req, res) => {
 };
 
 // Delete a doctor by ID
-export const deleteManager = async (req, res) => {
+export const deletedManager = async (req, res) => {
     const { id } = req.params;
 
     try {

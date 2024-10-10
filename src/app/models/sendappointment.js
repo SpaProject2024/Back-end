@@ -1,30 +1,33 @@
-const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-squence')(mongoose);
-
+import mongoose from "mongoose";
+// const AutoIncrement = require('mongoose-squence')(mongoose);
+import AutoIncrement from 'mongoose-sequence'; 
 const emailSchema = new mongoose.Schema({
     sendID: {
         type: Number,
     },
     managerID: {
         type: String,
-        require: true,
+        required: true,
     },
     doctorID: {
         type: String,
-        require: true,
+        reqrequireduire: true,
     },
     content: {
         type: String,
-        require: true,
+        required: true,
     },
     title: {
         type: String,
-        require: true,
+        required: true,
     },
     datesent: {
         type: Date,
-        require: Date.now,
+        default: Date.now,
     },
 });
-emailSchema.plugin(AutoIncrement, {inc_filed:'sendID'});
-module.export = mongoose.model('Email', emailSchema);
+emailSchema.plugin(AutoIncrement(mongoose), { inc_field: 'sendID' });
+// module.exports = mongoose.model('Email', emailSchema);
+export const sendappointment = mongoose.model("Email", emailSchema);
+
+export default sendappointment;

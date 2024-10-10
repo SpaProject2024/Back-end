@@ -1,29 +1,9 @@
+// SendAppointment 
 import SendAppointment from '../models/sendappointment.js';
 import service from '../models/Service.js';
-import Manager from '../models/managers.js';
-import Doctor from '../models/doctors.js';
-const sendEmail = (to, title, content) => {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER, // Địa chỉ email từ biến môi trường
-            pass: process.env.EMAIL_PASS, // Mật khẩu hoặc mật khẩu ứng dụng từ biến môi trường
-        },
-    });
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to,
-        subject: title,
-        text: content,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log('Error while sending mail:', error);
-        }
-        console.log('Email sent: ' + info.response);
-    });
-};
+// import Manager from './managersController.js';
+// import Doctor from './doctorsController.js';
+import nodemailer from 'nodemailer';
 
 export const createSend = async (req, res) => {
     const { managerID, doctorID, content, title, datesent } = req.body;
@@ -31,14 +11,6 @@ export const createSend = async (req, res) => {
         return res.status(400).json({ message: "All required fileds must be provide" });
     }
     try {
-        const manager = await Manager.findById(managerID);
-        const doctor = await Doctor.findById(doctorID);
-        if(!manager || !doctor){
-            return res.status(404).json({message: "Manager or Doctor not found"});
-        }
-        sendEmail(manager.email, title, content);
-        sendEmail(doctor.email, title, content);
-
         const newSendAppointment = new SendAppointment({
             managerID,
             doctorID,
@@ -72,7 +44,7 @@ export const getSendID = async (req, res) => {
         res.status(500).json({ message: "Error retrieving send", error: message });
     }
 };
-export const deleteSend = async (req, res) => {
+export const deletedSend = async (req, res) => {
     const { id } = req.params;
     try {
         const deleteSend = await SendAppointment.findByIdAndDelete(id);
