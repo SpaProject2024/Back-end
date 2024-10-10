@@ -6,7 +6,8 @@ import verifyPinRoutes from "./verifyPinRouter.js";
 import fogetPasswordRoutes from "./fogetPasswordRouter.js";
 import sendAppointmentRouter from "./sendAppointmentRouter.js";
 import managersRouter from "./managersRouter.js";
-import services from "./service.js";
+import services from "./ServiceRouter.js";
+
 function route(app) {
   app.use("/tests", testRoutes);
   app.use("/doctors", doctorsRoutes);
