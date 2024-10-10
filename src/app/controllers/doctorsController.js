@@ -1,5 +1,5 @@
-import doctors from "../models/doctors.js"; // Import the doctors model
-
+import Doctors from "../models/doctors.js"; // Import the doctors model
+import dotenv from "dotenv";
 // Create a new doctor
 export const createDoctor = async (req, res) => {
   const { fullName, doctorID, email, password, numberPhone, gender, address, birthday, experience, description, roleID, status, workingtime } = req.body;
@@ -10,7 +10,7 @@ export const createDoctor = async (req, res) => {
   }
 
   try {
-    const newDoctor = new doctors({
+    const newDoctor = new Doctors({
       fullName,
       doctorID,
       email,
@@ -37,7 +37,7 @@ export const createDoctor = async (req, res) => {
 // Get all doctors
 export const getDoctors = async (req, res) => {
   try {
-    const allDoctors = await doctors.find(); // Retrieve all doctors
+    const allDoctors = await Doctors.find(); // Retrieve all doctors
     res.status(200).json({ message: "Success", data: allDoctors });
   } catch (error) {
     res.status(500).json({ message: "Error retrieving doctors", error: error.message });
@@ -48,7 +48,7 @@ export const getDoctors = async (req, res) => {
 export const getDoctorById = async (req, res) => {
   try {
     const { id } = req.params;
-    const doctor = await doctors.findById(id); // Find doctor by ID
+    const doctor = await Doctors.findById(id); // Find doctor by ID
 
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
@@ -66,7 +66,7 @@ export const updateDoctor = async (req, res) => {
   const { fullName, doctorID, email, numberPhone, gender, address, birthday, experience, description, roleID, status, workingtime } = req.body;
 
   try {
-    const updatedDoctor = await doctors.findByIdAndUpdate(
+    const updatedDoctor = await Doctors.findByIdAndUpdate(
       id,
       { fullName, doctorID, email, numberPhone, gender, address, birthday, experience, description, roleID, status, workingtime },
       { new: true } // Return the updated document
@@ -87,7 +87,7 @@ export const deleteDoctor = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedDoctor = await doctors.findByIdAndDelete(id); // Find and delete doctor by ID
+    const deletedDoctor = await Doctors.findByIdAndDelete(id); // Find and delete doctor by ID
 
     if (!deletedDoctor) {
       return res.status(404).json({ message: "Doctor not found" });
