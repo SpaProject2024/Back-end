@@ -35,6 +35,7 @@ supplierSchema.pre("save", function (next) {
 supplierSchema.post("save", function (doc) {
     console.log("Supplier saved successfully", doc);
 });
+
 const suppliers = mongoose.model("suppliers", supplierSchema);
 export default suppliers;
 

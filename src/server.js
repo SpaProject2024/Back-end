@@ -3,7 +3,7 @@ import session from "express-session"; // Thêm import cho express-session
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import cors from "cors";
-import route from "./routes/index.js"
+import route from"./routes/index.js"
 import morgan from "morgan";
 
 dotenv.config();
