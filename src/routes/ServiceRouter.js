@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/', serviceController.getAll)
 router.get('/:id', serviceMiddleware.isNotFound, serviceController.get)
 router.post('/', serviceMiddleware.isBadRequest, serviceController.create)
-router.put('/:id', serviceMiddleware.isBadRequest, serviceMiddleware.isNotFound, serviceController.update)
+router.put('/:id', serviceMiddleware.isNotFound, serviceMiddleware.isBadRequest, serviceController.update)
 router.delete('/:id', serviceMiddleware.isNotFound, serviceController.delete)
 
 export default router;

@@ -1,4 +1,5 @@
 import doctorsRoutes from "./doctorsRouter.js";
+import appointsRoutes from "./AppointRouter.js";
 import loginRoutes from "./loginRouter.js";
 import registerRoutes from "./registerRouter.js";
 import verifyPinRoutes from "./verifyPinRouter.js";
