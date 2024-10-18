@@ -1,31 +1,23 @@
+// Import mongoose
 import mongoose from "mongoose";
 
-// Định nghĩa schema cho TestApi (Doctors)
+// Define schema for Doctors
 const doctorsSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
       required: true,
     },
-    doctorID: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
     numberPhone: {
-      type: String,
+      type: Number, // Giữ kiểu Number cho số điện thoại
       required: true,
     },
     gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Other'], // Giới hạn các giá trị hợp lệ cho giới tính
+      required: true,
+    },
+    avatar: {
       type: String,
       required: true,
     },
@@ -38,42 +30,21 @@ const doctorsSchema = new mongoose.Schema(
       required: true,
     },
     experience: {
-      type: Number, 
+      type: Number,
       required: true,
     },
     description: {
       type: String,
-    },
-    roleID: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
+      default: '', // Thêm giá trị mặc định nếu không có mô tả
     },
     workingtime: {
-      type: Number, 
+      type: Number,
       required: true,
     },
   },
-  { timestamps: true } 
+  { timestamps: true } // Tự động thêm trường createdAt và updatedAt
 );
 
-// Pre-save validation for required fields
-doctorsSchema.pre("save", function (next) {
-  if (!this.fullName || !this.email || !this.password) {
-    const err = new Error("Full Name, Email, and Password are required");
-    return next(err);
-  }
-  next();
-});
-
-// Post-save hook for logging
-doctorsSchema.post("save", function (doc) {
-  console.log("Doctor saved successfully:", doc);
-});
-
-const doctors = mongoose.model("doctors", doctorsSchema);
-
-export default doctors;
+// Export Doctors model
+const Doctors = mongoose.model("Doctors", doctorsSchema);
+export default Doctors;

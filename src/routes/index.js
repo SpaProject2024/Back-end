@@ -1,4 +1,3 @@
-import testRoutes from "./testRouters.js";
 import doctorsRoutes from "./doctorsRouter.js";
 import loginRoutes from "./loginRouter.js";
 import registerRoutes from "./registerRouter.js";
@@ -9,7 +8,6 @@ import managersRouter from "./managersRouter.js";
 import services from "./ServiceRouter.js";
 
 function route(app) {
-  app.use("/tests", testRoutes);
   app.use("/doctors", doctorsRoutes);
   app.use("/login", loginRoutes);
   app.use("/register", registerRoutes);

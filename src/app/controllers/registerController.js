@@ -57,6 +57,7 @@ export const registerUser = async (req, res) => {
       address: "",
       birthday: "",
       fullName: "",
+      avatar: "",
       gender: "",
       numberPhone: "",
       role // Lưu vai trò người dùng

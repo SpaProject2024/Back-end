@@ -1,19 +1,28 @@
 import express from "express";
 
-import {
-  createDoctor,
-  getDoctors,
-  getDoctorById,
-  updateDoctor,
-  deleteDoctor,
-} from "../app/controllers/doctorsController.js"
-import { authorizeRole } from "../middleware/authorize.js";
+import doctorController from "../app/controllers/doctorsController.js";
+import { authorizeRole } from "../app/middleware/authorize.js";
+import doctorMiddleware from "../app/middleware/DoctorMiddleware.js";
 const router = express.Router();
-router.get("/", getDoctors);
-router.post("/", createDoctor);
-router.get("/:id", authorizeRole(["customer", "staff", "doctor"]), getDoctorById);
-router.put("/:id", authorizeRole(["doctor", "admin", "manager"]), updateDoctor);
-router.delete("/:id",authorizeRole(["admin", "manager"]), deleteDoctor);
-
+router.get("/", doctorController.getAll);
+router.post(
+  "/",
+  // authorizeRole(["manager"]),
+  doctorMiddleware.isBadRequest,
+  doctorController.create
+);
+router.get("/:id", doctorMiddleware.isNotFound, doctorController.get);
+router.put(
+  "/:id",
+  // authorizeRole(["doctor", "admin", "manager"]),
+  doctorMiddleware.isBadRequest,
+  doctorMiddleware.isNotFound,
+  doctorController.update
+);
+router.delete(
+  "/:id",
+  // authorizeRole(["admin", "manager"]),
+  doctorMiddleware.isNotFound,
+  doctorController.delete
+);
 export default router;
-
