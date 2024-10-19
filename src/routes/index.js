@@ -1,5 +1,6 @@
 import testRoutes from "./testRouters.js";
 import doctorsRoutes from "./doctorsRouter.js";
+import appointsRoutes from "./AppointRouter.js";
 import loginRoutes from "./loginRouter.js";
 import registerRoutes from "./registerRouter.js";
 import verifyPinRoutes from "./verifyPinRouter.js";
@@ -9,6 +10,7 @@ import managersRouter from "./managersRouter.js";
 import suppliersRouter from "./supplierRouter.js";
 import services from "./ServiceRouter.js";
 function route(app) {
+  app.use("/appointments", appointsRoutes);
   app.use("/tests", testRoutes);
   app.use("/doctors", doctorsRoutes);
   app.use("/login", loginRoutes);
