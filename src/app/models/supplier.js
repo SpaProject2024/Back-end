@@ -10,10 +10,6 @@ const supplierSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        supplyID: {
-            type: Number,
-            required: true,
-        },
         numberphone: {
             type: Number,
             required: true,
@@ -22,11 +18,8 @@ const supplierSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// supplierSchema.plugin(autoIncrement(mongoose), { inc_field: "supplyID" });
-
-
 supplierSchema.pre("save", function (next) {
-    if (!this.address || !this.name || !this.numberphone || !this.supplyID) {
+    if (!this.address || !this.name || !this.numberphone) {
         const err = new Error("Address, Name, Supplier are required");
         return next(err);
     }

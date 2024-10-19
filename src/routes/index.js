@@ -6,7 +6,8 @@ import verifyPinRoutes from "./verifyPinRouter.js";
 import fogetPasswordRoutes from "./fogetPasswordRouter.js";
 import sendAppointmentRouter from "./sendAppointmentRouter.js";
 import managersRouter from "./managersRouter.js";
-import services from "./service.js";
+import suppliersRouter from "./supplierRouter.js";
+import services from "./ServiceRouter.js";
 function route(app) {
   app.use("/tests", testRoutes);
   app.use("/doctors", doctorsRoutes);
@@ -16,6 +17,7 @@ function route(app) {
   app.use("/fogetPassword", fogetPasswordRoutes);
   app.use("/sendappointment", sendAppointmentRouter);
   app.use("/services", services);
+  app.use("/suppliers", suppliersRouter);
   app.use("/managers", managersRouter);
 }
 export default route;
