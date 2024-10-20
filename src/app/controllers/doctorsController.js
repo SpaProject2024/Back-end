@@ -1,9 +1,10 @@
-import Doctors from "../models/doctors.js"; 
-
+import Doctors from "../models/users.js";
+import Doctor from "../models/doctors.js";
 class DoctorController {
   // Get all Doctors
   getAll(req, res, next) {
-    Doctors.find()
+    Doctors.find({ role: "doctor" })
+      .populate("doctorId")
       .then((doctors) => res.status(200).json({ data: doctors }))
       .catch((error) => res.status(500).json({ message: error.message }));
   }
@@ -11,6 +12,7 @@ class DoctorController {
   // Get a Doctor by ID
   get(req, res, next) {
     Doctors.findById(req.params.id)
+      .populate("doctorId") // Populate doctorId để lấy thông tin bác sĩ
       .then((doctor) => {
         if (!doctor) {
           return res.status(404).json({ message: "Doctor not found" });
@@ -31,7 +33,10 @@ class DoctorController {
 
   // Update a Doctor by ID
   update(req, res, next) {
-    Doctors.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+    Doctor.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    })
       .then((updatedDoctor) => {
         if (!updatedDoctor) {
           return res.status(404).json({ message: "Doctor not found" });
