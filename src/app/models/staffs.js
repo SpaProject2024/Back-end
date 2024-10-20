@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-// Định nghĩa schema cho bác sĩ
-const doctorsSchema = new mongoose.Schema(
+// Định nghĩa schema cho nhân viên
+const staffSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
       required: false,
     },
     numberPhone: {
-      type: Number, // Giữ kiểu Number cho số điện thoại
+      type: Number, // Số điện thoại
       required: false,
     },
-    avatar: {
-      type: String,
+    position: {
+      type: String, // Chức vụ
       required: false,
     },
     address: {
@@ -23,15 +23,7 @@ const doctorsSchema = new mongoose.Schema(
       type: Date,
       required: false,
     },
-    experience: {
-      type: Number,
-      required: false,
-    },
-    description: {
-      type: String,
-      required: false,
-    },
-    workingtime: {
+    salary: {
       type: Number,
       required: false,
     },
@@ -39,6 +31,6 @@ const doctorsSchema = new mongoose.Schema(
   { timestamps: true } // Tự động thêm trường createdAt và updatedAt
 );
 
-// Xuất mô hình bác sĩ
-const Doctor = mongoose.model("Doctor", doctorsSchema);
-export default Doctor;
+// Xuất mô hình nhân viên
+const Staff = mongoose.model("Staff", staffSchema);
+export default Staff;

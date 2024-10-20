@@ -1,30 +1,36 @@
 // controllers/userController.js
-import User from '../models/user.js'; // Đảm bảo đường dẫn đúng tới model
+import User from "../models/users.js"; // Đảm bảo đường dẫn đúng tới model
 
 // Thêm user
 export const addUser = async (req, res) => {
-  const { email, password, pin, userID ,fullName  } = req.body;
-  
-  if (!email || !password || !pin || !userID || !fullName ) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
+  // const { email, password, pin, userID, fullName } = req.body;
 
-  try {
-    const newUser = new User({ email, password, pin, userID, fullName });
-    await newUser.save();
-    res.status(201).json({ message: "User created successfully", data: newUser });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to create user", error: error.message });
-  }
+  // if (!email || !password || !pin || !fullName) {
+  //   return res.status(400).json({ message: "All fields are required" });
+  // }
+
+  // try {
+  //   const newUser = new User({ email, password, pin, userID, fullName });
+  //   await newUser.save();
+  //   res
+  //     .status(201)
+  //     .json({ message: "User created successfully", data: newUser });
+  // } catch (error) {
+  //   res
+  //     .status(500)
+  //     .json({ message: "Failed to create user", error: error.message });
+  // }
 };
 
 // Lấy danh sách tất cả users
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("doctorId");
     res.status(200).json({ message: "Success", data: users });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving users", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error retrieving users", error: error.message });
   }
 };
 
@@ -38,7 +44,9 @@ export const getUserById = async (req, res) => {
     }
     res.status(200).json({ message: "Success", data: user });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error retrieving user", error: error.message });
   }
 };
 
@@ -58,9 +66,13 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "User updated successfully", data: updatedUser });
+    res
+      .status(200)
+      .json({ message: "User updated successfully", data: updatedUser });
   } catch (error) {
-    res.status(500).json({ message: "Error updating user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating user", error: error.message });
   }
 };
 
@@ -76,6 +88,8 @@ export const deleteUser = async (req, res) => {
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting user", error: error.message });
   }
 };
