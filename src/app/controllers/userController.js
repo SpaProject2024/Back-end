@@ -1,21 +1,25 @@
 // controllers/userController.js
-import User from '../models/users.js'; // Đảm bảo đường dẫn đúng tới model
+import User from "../models/users.js"; // Đảm bảo đường dẫn đúng tới model
 
 // Thêm user
 export const addUser = async (req, res) => {
-  const { email, password, pin ,fullName  } = req.body;
-  
-  if (!email || !password || !pin || !fullName ) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
+  // const { email, password, pin, userID, fullName } = req.body;
 
-  try {
-    const newUser = new User({ email, password, pin, fullName });
-    await newUser.save();
-    res.status(201).json({ message: "User created successfully", data: newUser });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to create user", error: error.message });
-  }
+  // if (!email || !password || !pin || !fullName) {
+  //   return res.status(400).json({ message: "All fields are required" });
+  // }
+
+  // try {
+  //   const newUser = new User({ email, password, pin, userID, fullName });
+  //   await newUser.save();
+  //   res
+  //     .status(201)
+  //     .json({ message: "User created successfully", data: newUser });
+  // } catch (error) {
+  //   res
+  //     .status(500)
+  //     .json({ message: "Failed to create user", error: error.message });
+  // }
 };
 
 // Lấy danh sách tất cả users
