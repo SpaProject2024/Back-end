@@ -1,13 +1,7 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 // Định nghĩa schema cho User
 const userSchema = new mongoose.Schema({
-  userID: {
-    type: String,
-    required: true,
-    unique: true, // Đảm bảo userID là duy nhất
-    default: uuidv4, // Tạo ID duy nhất cho mỗi tài khoản
-  },
   address: {
     type: String,
     required: false,
@@ -50,8 +44,8 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true, // Bắt buộc trường này
   },
-  pinSecondary: { 
-    type: String ,
+  pinSecondary: {
+    type: String,
     required: false, // k Bắt buộc trư��ng này
   }, // Lưu trữ mã PIN phụ đã mã hóa
   pinCreatedAt: {
@@ -72,10 +66,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false, // Tài khoản chưa được kích hoạt
   },
-  role: { 
-    type: String, 
-    enum: ['admin', 'customer', 'doctor', 'staff', 'manager'], 
-    default: 'customer' }, // Thêm trường role
+  role: {
+    type: String,
+    enum: ['admin', 'customer', 'doctor', 'staff', 'manager'],
+    default: 'customer'
+  }, // Thêm trường role
 });
 
 // Middleware trước khi lưu để kiểm tra trường email và password

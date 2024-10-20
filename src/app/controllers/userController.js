@@ -1,16 +1,16 @@
 // controllers/userController.js
-import User from '../models/user.js'; // Đảm bảo đường dẫn đúng tới model
+import User from '../models/users.js'; // Đảm bảo đường dẫn đúng tới model
 
 // Thêm user
 export const addUser = async (req, res) => {
-  const { email, password, pin, userID ,fullName  } = req.body;
+  const { email, password, pin ,fullName  } = req.body;
   
-  if (!email || !password || !pin || !userID || !fullName ) {
+  if (!email || !password || !pin || !fullName ) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
-    const newUser = new User({ email, password, pin, userID, fullName });
+    const newUser = new User({ email, password, pin, fullName });
     await newUser.save();
     res.status(201).json({ message: "User created successfully", data: newUser });
   } catch (error) {
