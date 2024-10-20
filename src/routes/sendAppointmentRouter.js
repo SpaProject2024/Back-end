@@ -6,7 +6,7 @@ import {
     getSendID,
     deletedSend,
 } from "../app/controllers/sendappointmentController.js"
-import { authorizeRole } from "../middleware/authorize.js";
+// import { authorizeRole } from "../middleware/authorize.js";
 const router = express.Router();
 router.get("/", getSend);
 router.post("/", createSend);

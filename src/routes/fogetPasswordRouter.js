@@ -1,7 +1,6 @@
 import express from "express";
-import { forgotPassword , resetPassword } from "../app/controllers/fogetPasswordController.js"
+import PasswordController  from "../app/controllers/fogetPasswordController.js"
 const router = express.Router();
-router.post("/", forgotPassword);
-router.put("/reset", resetPassword);
+router.post("/", PasswordController.forgotPassword);
+router.put("/reset", PasswordController.resetPassword);
 export default router;
-//abc

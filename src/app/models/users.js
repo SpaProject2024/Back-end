@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 // import { v4 as uuidv4 } from "uuid";
 // Định nghĩa schema cho User
 const userSchema = new mongoose.Schema({
-  address: {
-    type: String,
-    required: false,
-  },
-  birthday: {
-    type: Date,
-    required: false,
-  },
+  // address: {
+  //   type: String,
+  //   required: false,
+  // },
+  // birthday: {
+  //   type: Date,
+  //   required: false,
+  // },
   created_at: {
     type: Date,
     default: Date.now, // Gán thời gian hiện tại khi tạo người dùng
@@ -19,27 +19,27 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true, // Đảm bảo email là duy nhất
   },
-  fullName: {
-    type: String,
-    required: false, // Bắt buộc trường này
-  },
-  gender: {
-    type: String,
-    // enum: ['Male', 'Female', 'Other', null],
-    required: false,
-  },
-  numberPhone: {
-    type: String,
-    required: false, // k Bắt buộc trường này
-  },
+  // fullName: {
+  //   type: String,
+  //   required: false, // Bắt buộc trường này
+  // },
+  // gender: {
+  //   type: String,
+  //   // enum: ['Male', 'Female', 'Other', null],
+  //   required: false,
+  // },
+  // numberPhone: {
+  //   type: String,
+  //   required: false, // k Bắt buộc trường này
+  // },
   password: {
     type: String,
     required: true, //  Bắt buộc trường này
   },
-  avatar: {
-    type: String,
-    required: false,
-  },
+  // avatar: {
+  //   type: String,
+  //   required: false,
+  // },
   pin: {
     type: Number,
     required: true, // Bắt buộc trường này
@@ -52,11 +52,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  roleID: {
-    type: Number,
-    required: false,
-    default: 1, // Gán giá trị mặc định cho roleID
-  },
+  // roleID: {
+  //   type: Number,
+  //   required: false,
+  //   default: 1, // Gán giá trị mặc định cho roleID
+  // },
   updated_at: {
     type: Date,
     default: Date.now, // Cập nhật thời gian hiện tại khi thay đổi người dùng
@@ -68,9 +68,21 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'customer', 'doctor', 'staff', 'manager'],
-    default: 'customer'
+    enum: ["admin", "customer", "doctor", "staff", "manager"],
+    default: "customer",
   }, // Thêm trường role
+  doctorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor",
+  },
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Customer",
+  },
+  staffId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Staff",
+  },
 });
 
 // Middleware trước khi lưu để kiểm tra trường email và password

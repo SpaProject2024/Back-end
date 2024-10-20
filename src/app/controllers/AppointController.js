@@ -4,9 +4,9 @@ class AppointController {
   // List of Appointments
   getAll(req, res, next) {
     Appointment.find()
-      .populate("services")
-      .populate("doctor")
-      .populate("user")
+      // .populate("services")
+      // .populate("doctor")
+      // .populate("user")
       .exec()
       .then((appointments) => res.status(200).json({ data: appointments }))
       .catch((error) => res.status(500).json({ message: error.message }));

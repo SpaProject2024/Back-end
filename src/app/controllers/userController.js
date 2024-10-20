@@ -21,10 +21,12 @@ export const addUser = async (req, res) => {
 // Lấy danh sách tất cả users
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("doctorId");
     res.status(200).json({ message: "Success", data: users });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving users", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error retrieving users", error: error.message });
   }
 };
 
@@ -38,7 +40,9 @@ export const getUserById = async (req, res) => {
     }
     res.status(200).json({ message: "Success", data: user });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error retrieving user", error: error.message });
   }
 };
 
@@ -58,9 +62,13 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "User updated successfully", data: updatedUser });
+    res
+      .status(200)
+      .json({ message: "User updated successfully", data: updatedUser });
   } catch (error) {
-    res.status(500).json({ message: "Error updating user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating user", error: error.message });
   }
 };
 
@@ -76,6 +84,8 @@ export const deleteUser = async (req, res) => {
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting user", error: error.message });
   }
 };

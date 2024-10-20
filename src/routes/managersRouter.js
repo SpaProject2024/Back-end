@@ -6,7 +6,7 @@ import {
     updateManager,
     deletedManager,
 } from "../app/controllers/managersController.js"
-import { authorizeRole } from "../middleware/authorize.js";
+// import { authorizeRole } from "../middleware/authorize.js";
 const router = express.Router();
 router.get("/", getManagers);
 router.post("/", createManager);
