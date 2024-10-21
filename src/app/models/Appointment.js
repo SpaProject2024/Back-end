@@ -6,7 +6,7 @@ const Appointment = new Schema(
     appointmentDate: { type: Date },
     status: { type: String },
     services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
-    doctor: { type: Schema.Types.ObjectId, ref: "doctors" },
+    doctor: { type: Schema.Types.ObjectId, ref: "Doctor" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
