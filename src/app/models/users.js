@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 // Định nghĩa schema cho User
 const userSchema = new mongoose.Schema({
+  userID: {
+    type: String,
+    required: true,
+    unique: true, // Đảm bảo userID là duy nhất
+    default: uuidv4, // Tạo ID duy nhất cho mỗi tài khoản
+  },
   // address: {
   //   type: String,
   //   required: false,
@@ -82,6 +88,10 @@ const userSchema = new mongoose.Schema({
   staffId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Staff",
+  },
+  managerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "manager",
   },
 });
 
