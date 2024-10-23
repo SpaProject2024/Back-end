@@ -32,12 +32,12 @@ export const loginUser = async (req, res) => {
     }
 
     // Tạo token JWT cho người dùng
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "5m",
     });
 
     // Tạo refresh token
-    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const refreshToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "7d", // Thời gian sống dài hơn cho refresh token
     });
 
@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
     // Trả về thông báo thành công và token
     res.status(200).json({
       message: "Đăng nhập thành công",
-      data: { userId: user._id, email: user.email, token, refreshToken, isActive: user.isActive },
+      data: { userId: user._id, email: user.email,role:user.role, token, refreshToken, isActive: user.isActive },
     });
   } catch (error) {
     // Bắt lỗi và trả về thông báo lỗi
