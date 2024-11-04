@@ -1,15 +1,14 @@
 import suppliers from "../models/supplier.js";
 
 export const createSupplier = async (req, res) => {
-    const { address, name, supplyID, numberphone } = req.body;
-    if (!address || !name || !supplyID || !numberphone) {
+    const { address, name, numberphone } = req.body;
+    if (!address || !name || !numberphone) {
         return res.status(400).json({ message: "All required fileds must be provide" });
     }
     try {
         const newSuppliler = new suppliers({
             address,
             name,
-            supplyID,
             numberphone,
         });
         await newSuppliler.save();
@@ -42,11 +41,11 @@ export const getSuppierByID = async (req, res) => {
 };
 export const updateSupplier = async (req, res) => {
     const { id } = req.params;
-    const { supplyID, address, name, numberphone } = req.body;
+    const { address, name, numberphone } = req.body;
     try {
         const updateSupplier = await suppliers.findByIdAndUpdate(
             id,
-            { supplyID, address, name, numberphone },
+            { address, name, numberphone },
             { new: true }
         );
         if (!updateSupplier) {

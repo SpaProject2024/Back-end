@@ -89,6 +89,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Staff",
   },
+  managerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "manager",
+  },
 });
 
 // Middleware trước khi lưu để kiểm tra trường email và password

@@ -5,6 +5,7 @@ import User from "../models/users.js"; // Mô hình User từ MongoDB
 import Doctor from "../models/doctors.js";
 import Customer from "../models/customers.js";
 import Staff from "../models/staffs.js";
+import Manager from "../models/managers.js";
 dotenv.config(); // Tải biến môi trường
 
 // Tạo transporter cho nodemailer
@@ -243,6 +244,19 @@ export const registerUser = async (req, res) => {
       savedData = await newStaff.save();
       newUser.staffId = savedData._id;
     }
+    else if (role === "manager") {
+      // Tạo nhân viên
+      const newManager = new Manager({
+        fullName: additionalData?.fullName || "",
+        numberPhone: additionalData?.numberPhone || null,
+        position: additionalData?.position || "",
+        address: additionalData?.address || "",
+        birthday: additionalData?.birthday || null,
+        salary: additionalData?.salary || 0,
+      });
+      savedData = await newManager.save();
+      newManager.managerId = savedData._id;
+    }
 
     // Lưu người dùng mới
     await newUser.save();
@@ -262,7 +276,8 @@ export const registerUser = async (req, res) => {
     const populatedUser = await User.findById(newUser._id)
       .populate("doctorId")
       .populate("customerId")
-      .populate("staffId");
+      .populate("staffId")
+      .populate("managerId");
 
     res.status(201).json({
       message: "Registration successful, PIN has been sent to email",
