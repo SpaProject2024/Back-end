@@ -25,6 +25,7 @@ class ServiceMiddleware {
     Service.findOne({ _id: req.params.id }).then((findService) => {
       if (!findService)
         return res.status(404).json({ message: "Service not found!" });
+      req.service = findService;
       next();
     });
   }
