@@ -4,6 +4,7 @@ import serviceMiddleware from "../app/middleware/ServiceMiddleware.js";
 const router = express.Router()
 
 router.get('/', serviceController.getAll)
+router.get('/search/:text', serviceController.getAll)
 router.get('/:id', serviceMiddleware.isNotFound, serviceController.get)
 router.post('/', serviceMiddleware.isBadRequest, serviceController.create)
 router.put('/:id', serviceMiddleware.isNotFound, serviceMiddleware.isBadRequest, serviceController.update)
