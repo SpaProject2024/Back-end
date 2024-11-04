@@ -30,20 +30,17 @@ class AppointMiddleware {
 
   // Not Found Appointment
   notFoundAppoint(req, res, next) {
-    Appointment.findOne({ _id: req.params.id }).then((findAppointment) => {
-      if (!findAppointment)
-        return res.status(404).json({ message: "Appointment not found!" });
-      next();
-    });
-  }
-
-  // Not Found Status
-  notFoundStatus(req, res, next) {
-    Appointment.findOne({ status: req.params.status }).then((findStatus) => {
-      if (!findStatus)
-        return res.status(404).json({ message: "Status not found!" });
-      next();
-    });
+    Appointment.findOne({ _id: req.params.id })
+      .populate("services")
+      .populate("doctor")
+      .populate("user")
+      .exec()
+      .then((findAppointment) => {
+        if (!findAppointment)
+          return res.status(404).json({ message: "Appointment not found!" });
+        req.appointment = findAppointment;
+        next();
+      });
   }
 }
 

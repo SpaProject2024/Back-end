@@ -12,31 +12,14 @@ class AppointController {
       .catch((error) => res.status(500).json({ message: error.message }));
   }
 
-  // Get Appointments Except Cancel
-  getExceptCancel(req, res, next) {
-    Appointment.find( {status: { $nin: 'Canceled' }} )
-      .populate("services")
-      .populate("doctor")
-      .populate("user")
-      .exec()
-      .then((appointments) => res.status(200).json({ data: appointments }))
-      .catch((error) => res.status(500).json({ message: error.message }));
-  }
-
   // Get Appointment
   get(req, res, next) {
-    Appointment.findOne({ _id: req.params.id })
-      .populate("services")
-      .populate("doctor")
-      .populate("user")
-      .exec()
-      .then((appoint) => res.status(200).json({ data: appoint }))
-      .catch((error) => res.status(500).json({ message: error.message }));
+    res.status(200).json({ data: req.appointment });
   }
 
   // Get Appointments by Status
   getByStatus(req, res, next) {
-    Appointment.find( {status: { $in: req.params.status }} )
+    Appointment.find( {status: { $in: req.params.text }} )
       .populate("services")
       .populate("doctor")
       .populate("user")
