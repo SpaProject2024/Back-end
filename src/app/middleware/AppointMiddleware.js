@@ -21,8 +21,8 @@ class AppointMiddleware {
 
   // Bad Request Status
   badRequestStatus(req, res, next) {
-    if (!req.body.status) {
-      return res.status(400).json({ message: "Status field is required!" });
+    if (!req.params.text) {
+      return res.status(400).json({ message: "Status parameter is required!" });
     }
 
     next();
