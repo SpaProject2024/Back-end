@@ -13,6 +13,13 @@ class ServiceController {
     res.status(200).json({ data: req.service });
   }
 
+  // List of Services
+  search(req, res, next) {
+    Service.find({ name: {$regex: req.params.text, $options: "i"} })
+      .then((services) => res.status(200).json({ data: services }))
+      .catch((error) => res.status(500).json({ message: error.message }));
+  }
+
   search(req, res, next) {
     Service.find({ name: { $regex: req.params.text, $options: "i" } })
       .then((services) => res.status(200).json({ data: services }))
