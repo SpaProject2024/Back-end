@@ -1,93 +1,67 @@
-import diagose from '../models/diagnose.js';
+import Diagnose from "../models/diagnose.js";
 
-// Lấy tất cả các diagose
-export const getAllDiagnoses = async (req, res) => {
-    try {
-        const diagnoses = await diagose.find()
+class DiagnoseController {
+    // Get all Diagnoses
+    getAll(req, res, next) {
+        Diagnose.find({})
             .populate("appointmentId")
             .populate("userId")
             .populate("productId")
-        return res.status(200).json(diagnoses);
-    } catch (error) {
-        return res.status(500).json({ message: "Error fetching diagnoses", error: error.message });
+            .then((diagnoses) => res.status(200).json({ data: diagnoses }))
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
 
-// Lấy diagose theo id
-export const getDiagnoseById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const diagnose = await diagose.findById(id)
+    // Get a Diagnose by ID
+    get(req, res, next) {
+        Diagnose.findById(req.params.id)
             .populate("appointmentId")
             .populate("userId")
-            .populate("productId") // populate nếu cần chi tiết
-
-        if (!diagnose) {
-            return res.status(404).json({ message: "Diagose not found" });
-        }
-
-        return res.status(200).json(diagnose);
-    } catch (error) {
-        return res.status(500).json({ message: "Error fetching diagose", error: error.message });
+            .populate("productId")
+            .then((diagnose) => {
+                if (!diagnose) {
+                    return res.status(404).json({ message: "Diagnose not found" });
+                }
+                res.status(200).json({ data: diagnose });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
 
-// Thêm diagose mới
-export const createDiagnose = async (req, res) => {
-    try {
-        const { content, appointmentId, userId, productId = null } = req.body; // Mặc định productId là null nếu không có
-
-        const newDiagnose = new diagose({
-            content,
-            appointmentId,
-            userId,
-            productId,
-        });
-
-        await newDiagnose.save();
-
-        return res.status(201).json({ message: "Diagose created successfully", diagose: newDiagnose });
-    } catch (error) {
-        return res.status(500).json({ message: "Error creating diagose", error: error.message });
+    // Create a new Diagnose
+    create(req, res, next) {
+        const diagnose = new Diagnose(req.body);
+        diagnose
+            .save()
+            .then((newDiagnose) => res.status(201).json({ data: newDiagnose }))
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
 
-// Cập nhật diagose theo id
-export const updateDiagnose = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { content, appointmentId, userId, productId = null } = req.body;
-
-        const updatedDiagnose = await diagose.findByIdAndUpdate(
-            id,
-            { content, appointmentId, userId, productId },
-            { new: true }
-        );
-
-        if (!updatedDiagnose) {
-            return res.status(404).json({ message: "Diagose not found" });
-        }
-
-        return res.status(200).json({ message: "Diagose updated successfully", diagose: updatedDiagnose });
-    } catch (error) {
-        return res.status(500).json({ message: "Error updating diagose", error: error.message });
+    // Update a Diagnose by ID
+    update(req, res, next) {
+        Diagnose.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        })
+            .then((updatedDiagnose) => {
+                if (!updatedDiagnose) {
+                    return res.status(404).json({ message: "Diagnose not found" });
+                }
+                res.status(200).json({ data: updatedDiagnose });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
 
-// Xóa diagose theo id
-export const deleteDiagnose = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        // Tìm và xóa diagose theo id
-        const deletedDiagnose = await diagose.findByIdAndDelete(id);
-
-        if (!deletedDiagnose) {
-            return res.status(404).json({ message: "Diagose not found" });
-        }
-
-        return res.status(200).json({ message: "Diagose deleted successfully" });
-    } catch (error) {
-        return res.status(500).json({ message: "Error deleting diagose", error: error.message });
+    // Delete a Diagnose by ID
+    delete(req, res, next) {
+        Diagnose.findByIdAndDelete(req.params.id)
+            .then((deletedDiagnose) => {
+                if (!deletedDiagnose) {
+                    return res.status(404).json({ message: "Diagnose not found" });
+                }
+                res.status(200).json({ message: "Diagnose deleted successfully!" });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
+}
+
+const diagnoseController = new DiagnoseController();
+export default diagnoseController;

@@ -3,8 +3,14 @@ const Schema = mongoose.Schema;
 
 const categorieSchema = new Schema(
     {
-        description: { type: String, required: true }, // Nội dung phải có
-        name: { type: String, required: true }, // Nội dung phải có
+        description: { 
+            type: String, 
+            required: true 
+        },
+        name: { 
+            type: String, 
+            required: true 
+        },
     },
     { timestamps: true }
 );

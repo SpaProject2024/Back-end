@@ -21,8 +21,8 @@ class AppointMiddleware {
 
   // Bad Request Status
   badRequestStatus(req, res, next) {
-    if (!req.body.status) {
-      return res.status(400).json({ message: "Status field is required!" });
+    if (!req.params.text) {
+      return res.status(400).json({ message: "Status parameter is required!" });
     }
 
     next();
@@ -30,20 +30,17 @@ class AppointMiddleware {
 
   // Not Found Appointment
   notFoundAppoint(req, res, next) {
-    Appointment.findOne({ _id: req.params.id }).then((findAppointment) => {
-      if (!findAppointment)
-        return res.status(404).json({ message: "Appointment not found!" });
-      next();
-    });
-  }
-
-  // Not Found Status
-  notFoundStatus(req, res, next) {
-    Appointment.findOne({ status: req.params.status }).then((findStatus) => {
-      if (!findStatus)
-        return res.status(404).json({ message: "Status not found!" });
-      next();
-    });
+    Appointment.findOne({ _id: req.params.id })
+      .populate("services")
+      .populate("doctor")
+      .populate("user")
+      .exec()
+      .then((findAppointment) => {
+        if (!findAppointment)
+          return res.status(404).json({ message: "Appointment not found!" });
+        req.appointment = findAppointment;
+        next();
+      });
   }
 }
 

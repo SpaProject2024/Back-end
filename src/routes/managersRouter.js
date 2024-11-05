@@ -1,19 +1,13 @@
 import express from "express";
-import {
-    // createManager,
-    getManagers,
-    // getManagerById,
-    // updateManager,
-    // deletedManager,
-} from "../app/controllers/managersController.js"
+import managersController from "../app/controllers/managersController.js";
+import { authorizeRole } from "../app/middleware/authorize.js";
+import { verifyToken } from "../app/middleware/verifyToken.js";
 // import { authorizeRole } from "../middlewar.js";
 const router = express.Router();
-router.get("/", getManagers);
-// router.get("/", getManagers);
-// router.post("/", createManager);
-// router.get("/:id", getManagerById);
-// router.put("/:id",  updateManager);
-// router.delete("/:id", deletedManager);
-
+router.get("/", managersController.getAll);
+router.get("/:id", managersController.get);
+router.post("/", verifyToken, authorizeRole(["admin", "manager"]), managersController.create);
+router.put("/:id", verifyToken, authorizeRole(["admin", "manager"]), managersController.update);
+router.delete("/:id", verifyToken, authorizeRole(["admin", "manager"]), managersController.delete);
 export default router;
 

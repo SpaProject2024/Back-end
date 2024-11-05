@@ -3,11 +3,31 @@ const Schema = mongoose.Schema;
 
 const Appointment = new Schema(
   {
-    appointmentDate: { type: Date },
-    status: { type: String },
-    services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
-    doctor: { type: Schema.Types.ObjectId, ref: "Doctor" },
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    appointmentDate: {
+      type: Date,
+      required: true
+    },
+    slot: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String
+    },
+    services: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Service"
+      }
+    ],
+    doctor: {
+      type: Schema.Types.ObjectId,
+      ref: "Doctor"
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
   },
   {
     timestamps: true,

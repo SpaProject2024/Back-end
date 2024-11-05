@@ -97,6 +97,7 @@ class PasswordController {
         res.status(500).json({ message: "Error processing request" });
       });
   }
+  
 }
 
 // Xuất khẩu class PasswordController

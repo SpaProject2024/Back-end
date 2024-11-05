@@ -1,70 +1,61 @@
-import categories from "../models/categories.js";
+import Categories from "../models/categories.js";
 
-export const createCategories = async (req, res) => {
-    const { name, description } = req.body;
-    if (!name || !description) {
-        return res.status(400).json({ message: "All required fileds must be provide" });
+class CategoriesController {
+    // Get all Categories
+    getAll(req, res, next) {
+        Categories.find({})
+            .then((categories) => res.status(200).json({ data: categories }))
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-    try {
-        const newCategories = new categories({
-            name,
-            description,
-        });
-        await newCategories.save();
-        res.status(201).json({ message: "Categories created successfully", data: newCategories });
-    } catch (error) {
-        res.status(500).json({ message: "Failed to create categories", error: error.message });
-    }
-};
 
-export const getCategories = async (req, res) => {
-    try {
-        const allCategories = await categories.find();
-        res.status(200).json({ message: "Success", data: allCategories });
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving categories", error: error.message });
+    // Get a Category by ID
+    get(req, res, next) {
+        Categories.findById(req.params.id)
+            .then((category) => {
+                if (!category) {
+                    return res.status(404).json({ message: "Category not found" });
+                }
+                res.status(200).json({ data: category });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
 
-export const getCategoriesByID = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const categorie = await categories.findById(id);
-        if (!categorie) {
-            return res.status(404).json({ message: "Categories not found" });
-        }
-        res.status(200).json({ message: "Success", data: categorie });
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving categories", error: message });
+    // Create a new Category
+    create(req, res, next) {
+        const category = new Categories(req.body);
+        category
+            .save()
+            .then((newCategory) => res.status(201).json({ data: newCategory }))
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
-export const updateCategories = async (req, res) => {
-    const { id } = req.params;
-    const { name, description } = req.body;
-    try {
-        const updateCategorie = await categories.findByIdAndUpdate(
-            id,
-            { name, description },
-            { new: true }
-        );
-        if (!updateCategorie) {
-            return res.status(404).json({ message: "Categories not found" });
-        }
-        res.status(200).json({ message: "Categories update successfully", data: updateCategorie });
-    } catch (error) {
-        res.status(500).json({ message: "Error updating categories", error: error.message });
-    }
-};
 
-export const deleteCategories = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteCategorie = await categories.findByIdAndDelete(id);
-        if (!deleteCategorie) {
-            return res.status(404).json({ message: "Categories not found" });
-        }
-        res.status(200).json({ message: "Categories deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Error deleting categories", error: error.message })
+    // Update a Category by ID
+    update(req, res, next) {
+        Categories.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        })
+            .then((updatedCategory) => {
+                if (!updatedCategory) {
+                    return res.status(404).json({ message: "Category not found" });
+                }
+                res.status(200).json({ data: updatedCategory });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
     }
-};
+
+    // Delete a Category by ID
+    delete(req, res, next) {
+        Categories.findByIdAndDelete(req.params.id)
+            .then((deletedCategory) => {
+                if (!deletedCategory) {
+                    return res.status(404).json({ message: "Category not found" });
+                }
+                res.status(200).json({ message: "Category deleted successfully!" });
+            })
+            .catch((error) => res.status(500).json({ message: error.message }));
+    }
+}
+
+const categoriesController = new CategoriesController();
+export default categoriesController;

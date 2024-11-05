@@ -1,17 +1,12 @@
 import express from "express";
-import {
-    createSupplier,
-    getSupplier,
-    getSuppierByID,
-    updateSupplier,
-    deleteSupplier,
-} from "../app/controllers/suppilerControler.js"
+import SuppliersController from "../app/controllers/suppilerControler.js"
 import { authorizeRole } from "../app/middleware/authorize.js";
+import { verifyToken } from "../app/middleware/verifyToken.js";
 const router = express.Router();
-router.get("/", getSupplier);
-router.post("/", authorizeRole(["manager"]), createSupplier);
-router.get("/:id", getSuppierByID);
-router.put("/:id", authorizeRole(["manager"]), updateSupplier);
-router.delete("/:id", authorizeRole(["manager"]), deleteSupplier);
+router.get("/", SuppliersController.getAll);
+router.get("/:id", SuppliersController.get);
+router.post("/", verifyToken, authorizeRole(["manager"]), SuppliersController.create);
+router.put("/:id", verifyToken, authorizeRole(["manager"]), SuppliersController.update);
+router.delete("/:id", verifyToken, authorizeRole(["manager"]), SuppliersController.delete);
 
 export default router;

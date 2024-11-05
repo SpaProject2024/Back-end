@@ -32,5 +32,5 @@ const managerSchema = new mongoose.Schema(
 );
 
 // Xuất mô hình nhân viên
-const Manager = mongoose.model("manager", managerSchema);
+const Manager = mongoose.model("Manager", managerSchema);
 export default Manager;

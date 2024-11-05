@@ -11,6 +11,11 @@ import diagoseRoutes from "./diagnoseRouter.js";
 import categoriesRoutes from "./categoriesRouter.js";
 import productRoutes from "./productRouter.js";
 import warehouesRoutes from "./warehouseRouter.js";
+import customerRouters from "./customerRouter.js";
+import staffRouters from "./staffRouter.js";
+import userRouter from "./userRouter.js";
+import reviewRouters from "./reviewRouter.js";
+import notificationRouters from "./notificationRouter.js";
 import services from "./ServiceRouter.js";
 
 function route(app) {
@@ -28,5 +33,10 @@ function route(app) {
   app.use("/categories", categoriesRoutes);
   app.use("/product", productRoutes);
   app.use("/warehouse", warehouesRoutes);
+  app.use("/customer", customerRouters);
+  app.use("/notification", notificationRouters);
+  app.use("/staff", staffRouters);
+  app.use("/review", reviewRouters);
+  app.use("/user", userRouter);
 }
 export default route;

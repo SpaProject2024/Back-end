@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema(
+const reviewSchema = new Schema(
     {
-        description: {
+        comment: {
             type: String,
             required: true
         },
@@ -11,24 +11,20 @@ const productSchema = new Schema(
             type: String,
             required: true
         },
-        price: {
+        rate: {
             type: String,
             required: true
         },
-        categorieID: {
+        serviceId: {
             type: Schema.Types.ObjectId,
-            ref: "categories",
-            required: true
-        },
-        supplyID: {
-            type: Schema.Types.ObjectId,
-            ref: "suppliers",
+            ref: "Service",
             default: null
         },
+
     },
     { timestamps: true }
 );
 
-const product = mongoose.model("product", productSchema);
+const product = mongoose.model("reviews", reviewSchema);
 
 export default product;

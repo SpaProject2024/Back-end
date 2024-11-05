@@ -10,11 +10,14 @@ class ServiceController {
 
   // Get Service
   get(req, res, next) {
-    Service.findOne({ _id: req.params.id })
-      .then((service) => res.status(200).json({ data: service }))
-      .catch((error) => res.status(500).json({ message: error.message }));
+    res.status(200).json({ data: req.service });
   }
 
+  search(req, res, next) {
+    Service.find({ name: { $regex: req.params.text, $options: "i" } })
+      .then((services) => res.status(200).json({ data: services }))
+      .catch((error) => res.status(500).json({ message: error.message }));
+  }
   // Create Service
   create(req, res, next) {
     const service = new Service(req.body);
