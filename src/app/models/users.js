@@ -2,20 +2,6 @@ import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 // Định nghĩa schema cho User
 const userSchema = new mongoose.Schema({
-  userID: {
-    type: String,
-    required: true,
-    unique: true, // Đảm bảo userID là duy nhất
-    default: uuidv4, // Tạo ID duy nhất cho mỗi tài khoản
-  },
-  // address: {
-  //   type: String,
-  //   required: false,
-  // },
-  // birthday: {
-  //   type: Date,
-  //   required: false,
-  // },
   created_at: {
     type: Date,
     default: Date.now, // Gán thời gian hiện tại khi tạo người dùng
@@ -23,29 +9,12 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // Đảm bảo email là duy nhất
+    unique: true,
   },
-  // fullName: {
-  //   type: String,
-  //   required: false, // Bắt buộc trường này
-  // },
-  // gender: {
-  //   type: String,
-  //   // enum: ['Male', 'Female', 'Other', null],
-  //   required: false,
-  // },
-  // numberPhone: {
-  //   type: String,
-  //   required: false, // k Bắt buộc trường này
-  // },
   password: {
     type: String,
     required: true, //  Bắt buộc trường này
   },
-  // avatar: {
-  //   type: String,
-  //   required: false,
-  // },
   pin: {
     type: Number,
     required: true, // Bắt buộc trường này
@@ -58,11 +27,6 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // roleID: {
-  //   type: Number,
-  //   required: false,
-  //   default: 1, // Gán giá trị mặc định cho roleID
-  // },
   updated_at: {
     type: Date,
     default: Date.now, // Cập nhật thời gian hiện tại khi thay đổi người dùng
@@ -91,7 +55,7 @@ const userSchema = new mongoose.Schema({
   },
   managerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "manager",
+    ref: "Manager",
   },
 });
 

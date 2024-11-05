@@ -32,7 +32,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Tạo token JWT cho người dùng
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role, email: user.email, password: user.password }, process.env.JWT_SECRET, {
       expiresIn: "5m",
     });
 
@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
     // Trả về thông báo thành công và token
     res.status(200).json({
       message: "Đăng nhập thành công",
-      data: { userId: user._id, email: user.email,role:user.role, token, refreshToken, isActive: user.isActive },
+      data: { userId: user._id, email: user.email, role: user.role, token, refreshToken, isActive: user.isActive },
     });
   } catch (error) {
     // Bắt lỗi và trả về thông báo lỗi
@@ -115,5 +115,41 @@ export const getUserById = async (req, res) => {
     res.status(200).json({ message: "Success", data: user });
   } catch (error) {
     res.status(500).json({ message: "Lỗi khi lấy thông tin người dùng", error: error.message });
+  }
+};
+// Hàm cập nhật mật khẩu
+export const updatePassword = async (req, res) => {
+  const { id } = req.params; // Lấy user ID từ tham số URL
+  const { oldPassword, newPassword } = req.body; // Lấy oldPassword và newPassword từ request body
+  try {
+    // Tìm người dùng theo ID
+    const user = await User.findById(id);
+
+    // Nếu người dùng không tồn tại, trả về lỗi
+    if (!user) {
+      return res.status(404).json({ message: "Người dùng không tồn tại" });
+    }
+
+    // Kiểm tra mật khẩu cũ
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    // if (!isMatch) {
+    //   return res.status(401).json({ message: "Mật khẩu cũ không chính xác" });
+    // }
+
+    // Kiểm tra xem mật khẩu mới có khác mật khẩu cũ không
+    if (oldPassword === newPassword) {
+      return res.status(400).json({ message: "Mật khẩu mới không được trùng với mật khẩu cũ." });
+    }
+
+    // Hash mật khẩu mới
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Cập nhật mật khẩu mới trong cơ sở dữ liệu
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Cập nhật mật khẩu thành công" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi cập nhật mật khẩu", error: error.message });
   }
 };

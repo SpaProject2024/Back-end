@@ -11,8 +11,8 @@ class DoctorController {
 
   // Get a Doctor by ID
   get(req, res, next) {
-    Doctors.findById(req.params.id)
-      .populate("doctorId") // Populate doctorId để lấy thông tin bác sĩ
+    Doctor.findById(req.params.id)
+      // .populate("doctorId") // Populate doctorId để lấy thông tin bác sĩ
       .then((doctor) => {
         if (!doctor) {
           return res.status(404).json({ message: "Doctor not found" });

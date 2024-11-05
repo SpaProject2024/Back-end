@@ -1,17 +1,16 @@
 import mongoose from "mongoose";
-// const AutoIncrement = require('mongoose-squence')(mongoose);
-import AutoIncrement from 'mongoose-sequence'; 
-const emailSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+const emailSchema = new Schema({
     sendID: {
         type: Number,
     },
     managerID: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId, ref: "manager",
+        required: true
     },
     doctorID: {
-        type: String,
-        reqrequireduire: true,
+        type: Schema.Types.ObjectId, ref: "Doctor",
+        required: true
     },
     content: {
         type: String,
@@ -25,9 +24,9 @@ const emailSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-});
-emailSchema.plugin(AutoIncrement(mongoose), { inc_field: 'sendID' });
-// module.exports = mongoose.model('Email', emailSchema);
-export const sendappointment = mongoose.model("Email", emailSchema);
+},
+    { timestamps: true }
+);
+export const sendappointment = mongoose.model("sendapplications", emailSchema);
 
 export default sendappointment;

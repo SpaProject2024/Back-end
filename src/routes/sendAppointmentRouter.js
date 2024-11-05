@@ -1,16 +1,12 @@
 import express from "express";
-//abc
-import {
-    createSend,
-    getSend,
-    getSendID,
-    deletedSend,
-} from "../app/controllers/sendappointmentController.js"
-// import { authorizeRole } from "../middleware/authorize.js";
+import sendController from "../app/controllers/sendappointmentController.js"
+import { authorizeRole } from "../app/middleware/authorize.js";
+import { verifyToken } from "../app/middleware/verifyToken.js";
 const router = express.Router();
-router.get("/", getSend);
-router.post("/", createSend);
-router.get("/:id",  getSendID);
-router.delete("/:id", deletedSend);
+router.get("/", sendController.getAll);
+router.get("/:id", sendController.get);
+router.post("/", verifyToken, authorizeRole(["manager", "staff", "doctor", "customer"]), sendController.create);
+router.put("/:id", verifyToken, authorizeRole(["manager", "staff", "doctor", "customer"]), sendController.update);
+router.delete("/:id", verifyToken, authorizeRole(["manager", "staff", "doctor", "customer"]), sendController.delete);
 
 export default router;

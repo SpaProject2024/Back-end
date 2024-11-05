@@ -27,147 +27,6 @@ function generateSecondaryPinCode() {
   return Math.floor(1000 + Math.random() * 9000); // Tạo mã PIN phụ 4 chữ số
 }
 
-// Hàm xử lý đăng ký người dùng
-// export const registerUser = async (req, res) => {
-//   const { email, password, role } = req.body; // Nhận vai trò từ yêu cầu đăng ký
-
-//   // Kiểm tra xem các trường cần thiết đã được cung cấp chưa
-//   if (!email || !password || !role) {
-//     return res.status(400).json({ message: "Email, password, and role are required" });
-//   }
-
-//   try {
-//     // Kiểm tra xem người dùng đã tồn tại chưa
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(409).json({ message: "User already exists" });
-//     }
-
-//     // Mã hóa mật khẩu
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     // Tạo mã PIN chính
-//     const pin = generateMainPinCode(); // Tạo mã PIN chính 6 chữ số
-
-//     // Tạo người dùng mới
-//     const newUser = new User({
-//       email,
-//       password: hashedPassword,
-//       pin,
-//       pinSecondary: "", // Mã PIN phụ sẽ được thêm sau
-//       pinCreatedAt: Date.now(), // Thời gian tạo mã PIN
-//       isActive: false, // Tài khoản chưa được kích hoạt
-//       role // Lưu vai trò người dùng
-//     });
-
-//     // Lưu người dùng mới vào cơ sở dữ liệu
-//     await newUser.save();
-//     req.session.email = email; // Lưu email vào phiên
-//     req.session.save(); // Lưu phiên
-//     console.log("email session: " + email);
-
-//     // Thiết lập tùy chọn email để thông báo mã PIN
-//     const mailOptions = {
-//       from: process.env.EMAIL_USER, // Sử dụng địa chỉ email từ biến môi trường
-//       to: email,
-//       subject: "Your Registration PIN",
-//       text: `Hello ${email},\n\nThank you for signing up! Your main PIN is: ${pin}.\n\nBest regards,\nSupport Team.`,
-//     };
-
-//     // Gửi email chứa mã PIN
-//     await transporter.sendMail(mailOptions);
-//     res.status(201).json({ message: "Registration successful, PIN has been sent to email", data: newUser });
-
-//   } catch (error) {
-//     // Xử lý lỗi trong quá trình đăng ký
-//     res.status(500).json({ message: "Error while registering", error: error.message });
-//   }
-// };
-// export const registerUser = async (req, res) => {
-//   const { email, password, role, doctorData } = req.body;
-
-//   // Kiểm tra xem các trường cần thiết có được cung cấp không
-//   if (!email || !password || !role) {
-//     return res
-//       .status(400)
-//       .json({ message: "Email, password, and role are required" });
-//   }
-
-//   try {
-//     // Kiểm tra xem người dùng đã tồn tại hay chưa
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(409).json({ message: "User already exists" });
-//     }
-
-//     // Mã hóa mật khẩu
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     // Tạo mã PIN chính
-//     const pin = generateMainPinCode(); // 6-digit PIN
-
-//     // Tạo người dùng mới
-//     const newUser = new User({
-//       email,
-//       password: hashedPassword,
-//       pin,
-//       pinSecondary: "", // Mã PIN thứ hai sẽ được thêm sau
-//       pinCreatedAt: Date.now(), // Thời gian tạo PIN
-//       isActive: false, // Tài khoản chưa được kích hoạt
-//       role, // Lưu vai trò người dùng
-//       doctorId: null, // Khởi tạo doctorId là null
-//     });
-
-//     // Nếu người dùng có vai trò là "doctor" thì tạo một Doctor rỗng
-//     let savedDoctor;
-//     if (role === "doctor") {
-//       const newDoctor = new Doctor({
-//         fullName: doctorData?.fullName || "", // Sử dụng giá trị mặc định nếu không có doctorData
-//         numberPhone: doctorData?.numberPhone || null,
-//         avatar: doctorData?.avatar || "",
-//         address: doctorData?.address || "",
-//         birthday: doctorData?.birthday || null,
-//         experience: doctorData?.experience || 0,
-//         description: doctorData?.description || "",
-//         workingtime: doctorData?.workingtime || 0,
-//       });
-//       savedDoctor = await newDoctor.save(); // Lưu bác sĩ
-//       newUser.doctorId = savedDoctor._id; // Gán doctorId cho người dùng từ savedDoctor
-//     }
-
-//     // Lưu người dùng mới vào cơ sở dữ liệu
-//     await newUser.save();
-
-//     // Lưu email vào session
-//     req.session.email = email;
-//     req.session.save(); // Lưu session
-//     console.log("Email session: " + email);
-
-//     // Đặt tùy chọn email để thông báo mã PIN
-//     const mailOptions = {
-//       from: process.env.EMAIL_USER, // Email từ biến môi trường
-//       to: email,
-//       subject: "Your Registration PIN",
-//       text: `Hello ${email},\n\nThank you for signing up! Your main PIN is: ${pin}.\n\nBest regards,\nSupport Team.`,
-//     };
-
-//     // Gửi email chứa mã PIN
-//     await transporter.sendMail(mailOptions);
-
-//     // Sử dụng populate để lấy thông tin bác sĩ nếu cần
-//     const populatedUser = await User.findById(newUser._id).populate("doctorId");
-
-//     // Phản hồi với thông báo thành công và dữ liệu người dùng đã populate
-//     res.status(201).json({
-//       message: "Registration successful, PIN has been sent to email",
-//       data: populatedUser,
-//     });
-//   } catch (error) {
-//     // Xử lý lỗi trong quá trình đăng ký
-//     res.status(500).json({ message: "Error while registering", error: error.message });
-//   }
-// };
-
 export const registerUser = async (req, res) => {
   const { email, password, role, additionalData } = req.body;
 
@@ -203,6 +62,7 @@ export const registerUser = async (req, res) => {
       doctorId: null,
       customerId: null,
       staffId: null,
+      managerId: null,
     });
 
     let savedData;
@@ -286,8 +146,11 @@ export const registerUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Error while registering",
+
       error: error.message,
     });
+    console.error("Error while registering:", error);
+
   }
 };
 
